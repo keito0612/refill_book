@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refill_book/ui/album/view/album_page.dart';
+import 'package:refill_book/ui/preview/view/preview_page.dart';
+import 'package:refill_book/ui/setting/view/setting_page.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));
@@ -27,6 +30,8 @@ class MyHomePage extends HookConsumerWidget {
   const MyHomePage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final List<Widget> pages = [AlbumPage()];
+    final List<String> pageTitleList = ["アルバム", "設定"];
     final selectedTab = useState<int>(0);
     void onItemTapped(int index) {
       selectedTab.value = index;
@@ -35,19 +40,14 @@ class MyHomePage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("ホーム"),
+        title: Text(pageTitleList[selectedTab.value]),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
-      ),
+      body: pages[selectedTab.value],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'アルバム',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
