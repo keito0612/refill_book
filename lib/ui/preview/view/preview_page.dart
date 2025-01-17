@@ -7,12 +7,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PreviewPage extends HookConsumerWidget {
-  const PreviewPage({super.key});
+  PreviewPage({super.key, this.id});
+  int? id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PageController controller = PageController();
-    final pageCount = useState(1);
+    final PageController controller = PageController(initialPage: id!);
+    final pageCount = useState((id! + 1));
     final visible = useState(true);
 
     return Scaffold(
@@ -33,7 +34,9 @@ class PreviewPage extends HookConsumerWidget {
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      _openModalBottomSheet(context);
+                    }),
                 TextButton(
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -113,5 +116,72 @@ Widget _previewMemoWidget(BuildContext context) {
     child: Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
     ),
+  );
+}
+
+void _openModalBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return Container(
+        height: MediaQuery.sizeOf(context).height / 4,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'カメラ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+              Divider(),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  // アルバムを開く処理を記載（今回は省略）
+                },
+                child: Text(
+                  'アルバム',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+              Divider(),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  '閉じる',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
   );
 }

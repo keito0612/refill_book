@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refill_book/model/album.dart';
+import 'package:refill_book/ui/image_list/view/image_list_page.dart';
 import 'package:refill_book/ui/preview/view/preview_page.dart';
 
 class AlbumPage extends HookConsumerWidget {
@@ -11,6 +12,7 @@ class AlbumPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Album> mocAlbumList = [
+      Album(id: 0, title: "旅の思い出"),
       Album(id: 0, title: "旅の思い出"),
       Album(id: 0, title: "旅の思い出"),
       Album(id: 0, title: "旅の思い出")
@@ -44,7 +46,7 @@ class AlbumPage extends HookConsumerWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const PreviewPage()),
+          MaterialPageRoute(builder: (context) => const ImageListPage()),
         );
       },
       child: Container(
