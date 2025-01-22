@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,11 +35,10 @@ class AlbumPage extends HookConsumerWidget {
         return albumItemWidget(albumList[index], context);
       },
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
-        mainAxisSpacing: 30,
-        crossAxisSpacing: 30,
-        childAspectRatio: aspectRatio,
-      ),
+          crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+          mainAxisSpacing: 30,
+          crossAxisSpacing: 30,
+          childAspectRatio: aspectRatio),
     );
   }
 
@@ -107,19 +107,30 @@ class AlbumPage extends HookConsumerWidget {
                           ),
                         )),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, right: 20.0, left: 20.0),
-                      child: Container(
-                        color: Colors.grey,
-                        width: 300,
-                        height: 120,
-                      ),
-                    )
+                        padding: const EdgeInsets.only(
+                            top: 8.0, right: 16.0, left: 16.0),
+                        child: _ImageWidget(null))
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+Widget _ImageWidget(Uint8List? imageData) {
+  if (imageData != null) {
+    return Image.memory(imageData);
+  } else {
+    return Container(
+      color: Colors.grey,
+      height: 140,
+      child: Center(
+        child: Image.asset(
+          "lib/image/no_image_icon.png",
         ),
       ),
     );

@@ -38,9 +38,13 @@ class MyHomePage extends HookConsumerWidget {
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(pageTitleList[selectedTab.value]),
+        title: Text(
+          pageTitleList[selectedTab.value],
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: pages[selectedTab.value],
       bottomNavigationBar: BottomNavigationBar(

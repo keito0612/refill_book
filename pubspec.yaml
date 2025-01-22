@@ -13,6 +13,10 @@ dependencies:
   flutter_hooks: ^0.20.5
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
+  crop_your_image: ^2.0.0
+  turn_page_transition: ^0.4.0
+  sqflite: ^2.4.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +29,5 @@ flutter:
   uses-material-design: true
   assets:
     - lib/image/no_image_icon.png
+    - lib/image/page_left.png
+    - lib/image/page_right.png

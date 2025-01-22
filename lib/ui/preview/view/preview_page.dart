@@ -15,13 +15,17 @@ class PreviewPage extends HookConsumerWidget {
     final PageController controller = PageController(initialPage: id!);
     final pageCount = useState((id! + 1));
     final visible = useState(true);
-
+    print(id);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: visible.value
           ? AppBar(
               centerTitle: true,
               backgroundColor: Colors.grey,
-              title: Text("${pageCount.value.toString()} / 5"),
+              title: Text(
+                "${pageCount.value.toString()} / 8",
+                style: TextStyle(color: Colors.white),
+              ),
               actions: [
                 TextButton(
                     style: TextButton.styleFrom(
@@ -48,7 +52,9 @@ class PreviewPage extends HookConsumerWidget {
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {})
+                    onPressed: () {
+                      _openEditModalBottomSheet(context);
+                    })
               ],
             )
           : null,
@@ -56,7 +62,7 @@ class PreviewPage extends HookConsumerWidget {
         dragStartBehavior: DragStartBehavior.values.first,
         scrollDirection: axisDirectionToAxis(AxisDirection.right),
         controller: controller,
-        itemCount: 5,
+        itemCount: 20,
         itemBuilder: (context, index) {
           return GestureDetector(
               onTap: () {
@@ -174,6 +180,73 @@ void _openModalBottomSheet(BuildContext context) {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void _openEditModalBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return Container(
+        height: MediaQuery.sizeOf(context).height / 4,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.grey.withValues(alpha: 0.4),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'フォトエディタ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+              Divider(),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  // アルバムを開く処理を記載（今回は省略）
+                },
+                child: Text(
+                  '画像を変える',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+              Divider(),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  '閉じる',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                     color: Colors.red,
                   ),
                 ),
